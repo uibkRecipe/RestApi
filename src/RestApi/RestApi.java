@@ -15,9 +15,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+
+import persistent.classes.User;
 
 public class RestApi {
 
@@ -39,54 +42,66 @@ public class RestApi {
 	 *  
 	 ****************************************************************/
 
-	public Boolean login(String username, String password) {
-		String test = doGet("http://138.232.65.234:8080/RestServer/rest/user/login/"
+	public User login(String username, String password) {
+		String test = doGet("http://138.232.65.234:8080/RestServer2/rest/manager/login/"
 				+ username + "/" + password);
 		ObjectMapper mapper = new ObjectMapper();
-		Boolean o = null;
+		System.out.println(test);
+		User o = null;
 		try {
-			o = mapper.readValue(test, Boolean.class);
+			o = mapper.readValue(test, User.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return o;
 	}
 
-//	public Boolean addUser(String username, String password, String email,
-//			String firstname, String lastname) {
-//		User newUser = new User(username, password, email, firstname, lastname);
-//		ObjectMapper mapper = new ObjectMapper();
-//		Writer strWriter = new StringWriter();
-//
-//		try {
-//			mapper.writeValue(strWriter, newUser);
-//		} catch (JsonGenerationException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		} catch (JsonMappingException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		String userDataJSON = strWriter.toString();
-//
-//		try {
-//			HttpResponse response = doPost(
-//					"http://138.232.65.234:8080/RestServer/rest/user/register",
-//					userDataJSON);
-//		} catch (ClientProtocolException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return false;
-//	}
+	public Boolean addUser(String username, String password, String email,
+			String firstname, String lastname) {
+		User newUser = new User(username, password, email, firstname, lastname);
+		ObjectMapper mapper = new ObjectMapper();
+		Writer strWriter = new StringWriter();
+		
+		Boolean ret = false;
+
+		try {
+			mapper.writeValue(strWriter, newUser);
+		} catch (JsonGenerationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String userDataJSON = strWriter.toString();
+
+		try {
+			HttpResponse response1 = doPost(
+					"http://138.232.65.234:8080/RestServer2/rest/manager/register",
+					userDataJSON);
+			System.out.println(response1.getStatusLine().toString());
+			HttpEntity entity =response1.getEntity();
+			 if (entity != null) {
+		           String retSrc = EntityUtils.toString(entity); 
+		           ret = mapper.readValue(retSrc, Boolean.class);
+		        }
+
+			
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+
+		return false;
+	}
 	
 	/****************************************************************
 	 * 
