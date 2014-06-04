@@ -18,7 +18,12 @@ public class Tester {
 	}
 	@Test
 	public void test3() {
-		assertTrue(RestApi.getInstance().addUser("blub123", "blub", "simon@blub.com", "simon", "simon"));
+		assertTrue(RestApi.getInstance().addUser("bvb123", "bvb123", "hoi23@google.de", "mister", "test"));
+	}
+	
+	@Test
+	public void test4(){
+		assertTrue(RestApi.getInstance().getCountryList()!= null);
 	}
 
 }
