@@ -227,7 +227,7 @@ public class RestApi {
 			});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return cities;	
 	}
@@ -533,7 +533,7 @@ public class RestApi {
 	 * 
 	 *****************************************************************/
 
-	public List<Region> getRegionByCountryCode(String countryCode) {
+	public List<Region> findRegionByCountryCode(String countryCode) {
 		String url = URLBASE + "region/" + countryCode;
 		String json = doGet(url);
 		List<Region> regions = null;

@@ -9,18 +9,19 @@ import org.junit.Test;
 
 import persistent.classes.City;
 import persistent.classes.Country;
+import persistent.classes.Region;
 import restApi.RestApi;
 
 public class Tester {
 
-//	@Test
-//	public void test() {
-//		assertTrue(RestApi.getInstance().login("hannes", "hannes")!=null);
-//	}
-//	@Test
-//	public void test2() {
-//		assertTrue(RestApi.getInstance().login("thomas", "bk")==null);
-//	}
+	@Test
+	public void test() {
+		assertTrue(RestApi.getInstance().login("hannes", "hannes")!=null);
+	}
+	@Test
+	public void test2() {
+		assertTrue(RestApi.getInstance().login("thomas", "bk")==null);
+	}
 //	@Test
 //	public void test3() {
 //		City c = RestApi.getInstance().findCityById(31731);
@@ -66,26 +67,30 @@ public class Tester {
 //		IngredientType hoi = RestApi.getInstance().getAllIngredientType().get(2);
 //		RecipeIngredients recIN = new RecipeIngredients();
 //		recIN.addIngredient("1000 g", hoi);
-//		System.out.println(recIN.getIngredients().size());
+//		System.out.praaintln(recIN.getIngredients().size());
 //		System.out.println(recIN.getQuantities().size());
 //		assertTrue(RestApi.getInstance().addIngredientToRecipe(2, recIN));
 //		
 //	}
-	@Test
-	public void findCityByCountry (){
-		List<Country> countries = RestApi.getInstance().getCountryList();
-		List<City> city = new ArrayList<City>();
-		city = RestApi.getInstance().findCityByCountry("AT");
-		for (City city2 : city) {
-			System.out.println(city2);
-		}
-		
+//	@Test
+//	public void findCityByCountry (){
+//		List<Country> countries = RestApi.getInstance().getCountryList();
+//		List<City> city = new ArrayList<City>();
+//		System.out.println(countries.get(1));
+//		city = RestApi.getInstance().findCityByCountry("IT");
+//		System.out.println(city);		
 //		for(Country c : countries){
 //			city.addAll(RestApi.getInstance().findCityByCountry(c.getCode()));
 //		}
 //		for (City city2 : city) {
 //			System.out.println(city2);
-//		}
+//		}		
+//	}
+	
+	@Test
+	public void findRegionByCountryCode(){
+		List<Region> regions = RestApi.getInstance().findRegionByCountryCode("IT");
+		System.out.println(regions.size());
 	}
 
 }
