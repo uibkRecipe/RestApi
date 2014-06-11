@@ -8,6 +8,8 @@ import static restApi.RestApiLib.objectToJson;
 import java.io.IOException;
 import java.util.List;
 
+
+
 import org.apache.http.client.ClientProtocolException;
 
 import persistent.classes.City;
@@ -51,7 +53,7 @@ public class RestApi {
 
 	public User login(String username, String password) {
 		String test = doGet(URLBASE + "login/" + username + "/" + password);
-
+		System.out.println(test);
 		User o = null;
 		try {
 			o = mapper.readValue(test, User.class);
@@ -63,10 +65,10 @@ public class RestApi {
 	}
 
 	public boolean addUser(String username, String password, String email,
-			String firstname, String lastname) {
+			String firstname, String lastname, City city) {
 		boolean ret = false;
-
-		User newUser = new User(username, password, email, firstname, lastname);
+		
+		User newUser = new User(username, password, email, city); //new User(username, password, email, firstname, lastname);
 		// byte[] foto = null;
 		// File fi = new File("test.jpg");
 		// try {
@@ -113,12 +115,12 @@ public class RestApi {
 	 * 
 	 ****************************************************************/
 
-	public List<String> getCountryList() {
+	public List<Country> getCountryList() {
 		String json = doGet(URLBASE + "country");
-		List<String> countries = null;
+		List<Country> countries = null;
 		try {
 			countries = mapper.readValue(json,
-					new TypeReference<List<String>>() {
+					new TypeReference<List<Country>>() {
 					});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -214,6 +216,20 @@ public class RestApi {
 			e.printStackTrace();
 		}
 		return cities;
+	}
+	
+	public List<City> findCityByCountry(String country) {
+		String url = URLBASE + "cityByCountry/" + country;
+		String json = doGet(url);
+		List<City> cities = null;
+		try {
+			cities = mapper.readValue(json, new TypeReference<List<City>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cities;	
 	}
 
 	/******************************************************************

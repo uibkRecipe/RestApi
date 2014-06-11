@@ -2,21 +2,20 @@ package JUnitTest;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
-import persistent.classes.IngredientType;
-import persistent.classes.Recipe;
-import persistent.classes.RecipeIngredients;
-import persistent.classes.User;
+import persistent.classes.City;
+import persistent.classes.Country;
 import restApi.RestApi;
 
 public class Tester {
 
 //	@Test
 //	public void test() {
-//		assertTrue(RestApi.getInstance().login("thomas", "thomas")!=null);
+//		assertTrue(RestApi.getInstance().login("hannes", "hannes")!=null);
 //	}
 //	@Test
 //	public void test2() {
@@ -24,7 +23,8 @@ public class Tester {
 //	}
 //	@Test
 //	public void test3() {
-//		assertTrue(RestApi.getInstance().addUser("blub12", "bvb123", "blub12@google.de", "mister", "test"));
+//		City c = RestApi.getInstance().findCityById(31731);
+//		assertTrue(RestApi.getInstance().addUser("simon", "simon", "simon123@google.de", "mister", "test", c));
 //	}
 //	@Test
 //	public void findUser(){
@@ -34,12 +34,15 @@ public class Tester {
 //
 //	@Test
 //	public void test4(){
-//		assertTrue(RestApi.getInstance().getCountryList()!= null);
+//		List<Country> countries = RestApi.getInstance().getCountryList();
+//		for(Country c : countries)
+//			System.out.println(c.getName());
+//		
 //	}
 //	
 //	@Test
 //	public void addRecipe(){
-//		Recipe newrec = new Recipe("hannes", "test", "blub", 10, "dsdsfkljadsf");
+//		Recipe newrec = new Recipe("simon", "test", "blub", 10, "dsdsfkljadsf");
 //		assertTrue(RestApi.getInstance().addRecipe(newrec));
 //	}
 //	
@@ -58,15 +61,31 @@ public class Tester {
 //		}
 	
 	
+//	@Test
+//	public void testAddIngredientstoRecipe(){
+//		IngredientType hoi = RestApi.getInstance().getAllIngredientType().get(2);
+//		RecipeIngredients recIN = new RecipeIngredients();
+//		recIN.addIngredient("1000 g", hoi);
+//		System.out.println(recIN.getIngredients().size());
+//		System.out.println(recIN.getQuantities().size());
+//		assertTrue(RestApi.getInstance().addIngredientToRecipe(2, recIN));
+//		
+//	}
 	@Test
-	public void testAddIngredientstoRecipe(){
-		IngredientType hoi = RestApi.getInstance().getAllIngredientType().get(2);
-		RecipeIngredients recIN = new RecipeIngredients();
-		recIN.addIngredient("1000 g", hoi);
-		System.out.println(recIN.getIngredients().size());
-		System.out.println(recIN.getQuantities().size());
-		assertTrue(RestApi.getInstance().addIngredientToRecipe(2, recIN));
+	public void findCityByCountry (){
+		List<Country> countries = RestApi.getInstance().getCountryList();
+		List<City> city = new ArrayList<City>();
+		city = RestApi.getInstance().findCityByCountry("AT");
+		for (City city2 : city) {
+			System.out.println(city2);
+		}
 		
+//		for(Country c : countries){
+//			city.addAll(RestApi.getInstance().findCityByCountry(c.getCode()));
+//		}
+//		for (City city2 : city) {
+//			System.out.println(city2);
+//		}
 	}
 
 }

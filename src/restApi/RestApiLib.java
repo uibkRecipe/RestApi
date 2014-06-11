@@ -1,9 +1,6 @@
 package restApi;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -27,6 +24,7 @@ public class RestApiLib {
 	
 	public static String doGet(String url) {
 		String result = null;
+		System.out.println(url);
 		HttpClient httpclient = new DefaultHttpClient();
 		// Prepare a request object
 		HttpGet httpget = new HttpGet(url);
