@@ -56,8 +56,9 @@ public class User {
 	 * @param password Password of the new user
 	 * @param email
 	 */
-	public User(String uname, String password, String email, City c){
-		this(uname,password, email, c.getID(), c.getCountry());
+	public User(String uname, String password, String email,
+			String firstname, String lastname, City c){
+		this(uname,password, email,firstname, lastname, c.getID(), c.getCountry());
 		
 	}
 	

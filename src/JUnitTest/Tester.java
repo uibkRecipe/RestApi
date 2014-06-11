@@ -2,13 +2,12 @@ package JUnitTest;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
 import persistent.classes.City;
-import persistent.classes.Country;
+import persistent.classes.Recipe;
 import persistent.classes.Region;
 import restApi.RestApi;
 
@@ -90,7 +89,24 @@ public class Tester {
 	@Test
 	public void findRegionByCountryCode(){
 		List<Region> regions = RestApi.getInstance().findRegionByCountryCode("IT");
-		System.out.println(regions.size());
+		System.out.println(regions.get(5).getName());
+		for (Region region : regions) {
+			System.out.println(region);
+		}
+		List<City> cities = RestApi.getInstance().findCityByCountryAndRegion("IT", regions.get(16).getCode());
+		for(int i=0; i< cities.size(); i++)
+			System.out.println(i + " " +cities.get(i).toString());
+//		for (City city : cities) {
+//			System.out.println(city);
+//		}
+	}
+	
+	@Test
+	public void getAllRecipes(){
+		List<Recipe> recipes = RestApi.getInstance().getAllRecipes();
+		for (Recipe recipe : recipes) {
+			System.out.println(recipe);
+		}
 	}
 
 }

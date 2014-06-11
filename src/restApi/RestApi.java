@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RestApi {
 
-	private static final String URLBASE = "http://138.232.65.234:8080/RestServer/rest/manager/";
+	private static final String URLBASE = "http://138.232.65.234:8080/RestServer2/rest/manager/";
 
 	private static RestApi instance;
 
@@ -68,7 +68,7 @@ public class RestApi {
 			String firstname, String lastname, City city) {
 		boolean ret = false;
 		
-		User newUser = new User(username, password, email, city); //new User(username, password, email, firstname, lastname);
+		User newUser = new User(username, password, email, firstname, lastname, city); //new User(username, password, email, firstname, lastname);
 		// byte[] foto = null;
 		// File fi = new File("test.jpg");
 		// try {
@@ -96,6 +96,40 @@ public class RestApi {
 
 		return ret;
 	}
+	
+	public boolean addUser(String username, String password, String email,
+			String firstname, String lastname, byte[] foto,  City city) {
+		boolean ret = false;
+		
+		User newUser = new User(username, password, email, firstname, lastname, city); //new User(username, password, email, firstname, lastname);
+		// byte[] foto = null;
+		// File fi = new File("test.jpg");
+		// try {
+		// foto = Files.readAllBytes(fi.toPath());
+		// } catch (IOException e2) {
+		// // TODO Automatisch generierter Erfassungsblock
+		// e2.printStackTrace();
+		// }
+		// newUser.setIsActive(1);
+		// newUser.setFoto(foto);
+		newUser.setFoto(foto);
+		String userDataJSON = objectToJson(newUser);
+		String response = doPost(URLBASE + "register", userDataJSON);
+		System.out.println(response);
+		try {
+			ret = mapper.readValue(response, boolean.class);
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
+
 
 	public User findUserById(String userName) {
 		String url = URLBASE + "findUser/" + userName;
@@ -334,19 +368,21 @@ public class RestApi {
 	 
 
 
-	public boolean findRecipeByAutor(String author) {
+	public List<Recipe> findRecipeByAutor(String author) {
 		String url = URLBASE + "findRecipeByAuthor/" + author;
 		String json = doGet(url);
-		boolean ret = false;
+		List<Recipe> ret = null;
 		try {
-			ret = mapper.readValue(json, boolean.class);
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret;
 	}
-	public boolean removeRecipe(String username, int recipeID){
+
+	public boolean removeRecipe(String username, int recipeID) {
 		boolean ret = false;
 		String url = URLBASE + "recipe/" + username + "/" + recipeID;
 		String response = doDelete(url);
@@ -362,7 +398,21 @@ public class RestApi {
 		}
 
 		return ret;
-}
+	}
+	
+	public List<Recipe> getAllRecipes() {
+		String url = URLBASE + "getAllRecipes";
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
 
 	/***************************************************************
 	 * 
