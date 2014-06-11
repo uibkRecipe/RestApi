@@ -1,12 +1,13 @@
-package restApi;
+package at.ac.uibk.recipe.api;
 
-import static restApi.RestApiLib.doDelete;
-import static restApi.RestApiLib.doGet;
-import static restApi.RestApiLib.doPost;
-import static restApi.RestApiLib.objectToJson;
+import static at.ac.uibk.recipe.api.RestApiLib.doDelete;
+import static at.ac.uibk.recipe.api.RestApiLib.doGet;
+import static at.ac.uibk.recipe.api.RestApiLib.doPost;
+import static at.ac.uibk.recipe.api.RestApiLib.objectToJson;
 
 import java.io.IOException;
 import java.util.List;
+
 
 
 

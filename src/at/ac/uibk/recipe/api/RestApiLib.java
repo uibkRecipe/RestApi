@@ -1,4 +1,4 @@
-package restApi;
+package at.ac.uibk.recipe.api;
 
 import java.io.IOException;
 import java.io.StringWriter;

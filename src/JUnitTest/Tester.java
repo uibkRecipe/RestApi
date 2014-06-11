@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import at.ac.uibk.recipe.api.RestApi;
 import persistent.classes.City;
 import persistent.classes.Recipe;
 import persistent.classes.Region;
-import restApi.RestApi;
 
 public class Tester {
 
