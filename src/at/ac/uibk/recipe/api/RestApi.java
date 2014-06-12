@@ -3,10 +3,15 @@ package at.ac.uibk.recipe.api;
 import static at.ac.uibk.recipe.api.RestApiLib.doDelete;
 import static at.ac.uibk.recipe.api.RestApiLib.doGet;
 import static at.ac.uibk.recipe.api.RestApiLib.doPost;
+import static at.ac.uibk.recipe.api.RestApiLib.doPut;
 import static at.ac.uibk.recipe.api.RestApiLib.objectToJson;
 
 import java.io.IOException;
 import java.util.List;
+
+
+
+
 
 
 
@@ -53,7 +58,6 @@ public class RestApi {
 
 	public User login(String username, String password) {
 		String test = doGet(URLBASE + "login/" + username + "/" + password);
-		System.out.println(test);
 		User o = null;
 		try {
 			o = mapper.readValue(test, User.class);
@@ -144,6 +148,27 @@ public class RestApi {
 		}
 		return newUser;
 
+	}
+	
+	public boolean changePassword(String username, String oldPassword,
+			String newPassword, String newPasswordConfirm) {
+		boolean ret = false;
+		String url = URLBASE + "changePassword/" + username + "/" + oldPassword + "/" + newPassword + "/" + newPasswordConfirm;
+
+		String response = doPut(url, "");
+		try {
+			ret = mapper.readValue(response, boolean.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 	/****************************************************************
@@ -399,11 +424,65 @@ public class RestApi {
 
 		return ret;
 	}
+	
+	public List<Recipe> findRecipeByCategory(String category) {
+		String url = URLBASE + "findRecipe/" + category;
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public Recipe findRecipeById(int recipeID) {
+		String url = URLBASE + "findRecipeID/" + recipeID;
+		String json = doGet(url);
+		Recipe ret = null;
+		try {
+			ret = mapper.readValue(json, Recipe.class);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
 
 	public List<Recipe> getAllRecipes() {
 		String url = URLBASE + "getAllRecipes";
 		String json = doGet(url);
-		System.out.println(json);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public List<Recipe> findRecipeByName(String name) {
+		String url = URLBASE + "findRecipeName/" + name;
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public List<Recipe> findRecipeByTime(int mintime, int maxtime) {
+		String url = URLBASE + "findRecipeTime/" + mintime + "/" + maxtime;
+		String json = doGet(url);
 		List<Recipe> ret = null;
 		try {
 			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
@@ -486,14 +565,13 @@ public class RestApi {
 	 * Composed Of
 	 * 
 	 ***********************************************************/
-	public List<IngredientType> getIngredients(int recipeId) {
+	public RecipeIngredients getIngredients(int recipeId) {
 		String url = URLBASE + "ingredient/" + recipeId;
 		String json = doGet(url);
-		List<IngredientType> ingredients = null;
+		RecipeIngredients ingredients = null;
 		try {
 			ingredients = mapper.readValue(json,
-					new TypeReference<List<IngredientType>>() {
-					});
+					RecipeIngredients.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -501,19 +579,7 @@ public class RestApi {
 		return ingredients;
 	}
 
-	// public boolean findRezeptByIngredient() {
-	// String test =
-	// doGet("http://138.232.65.234:8080/RestServer/rest/recipe/ingredients");
-	// ObjectMapper mapper = new ObjectMapper();
-	// boolean o = false;
-	// try {
-	// o = mapper.readValue(test, boolean.class);
-	// } catch (Exception e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// return o;
-	// }
+
 
 	public boolean addIngredientToRecipe(int recipeID,
 			RecipeIngredients recIngredients) {
@@ -532,6 +598,53 @@ public class RestApi {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public List<Recipe> findRecipeByIngredient(int ingredient1) {
+		String url = URLBASE + "findRecipe1/" + ingredient1;
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+
+	
+	public List<Recipe> findRecipeByIngredient(int ingredient1, int ingredient2) {
+		String url = URLBASE + "findRecipe2/" + ingredient1 + "/" +ingredient2;
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+
+	
+	public List<Recipe> findRecipeByIngredient(int ingredient1,
+			int ingredient2, int ingredient3) {
+		String url = URLBASE + "findRecipe3/" + ingredient1 + "/" +ingredient2 + "/" + ingredient3;
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -565,7 +678,7 @@ public class RestApi {
 	}
 	
 	public List<Ingredient> findIngredientsByIngredientType(int ingredientTypeID) {
-		String url = URLBASE + "finIngredientByType/" + ingredientTypeID;
+		String url = URLBASE + "findIngredientByType/" + ingredientTypeID;
 		String json = doGet(url);
 		List<Ingredient> ingredients = null;
 		try {
@@ -622,6 +735,71 @@ public class RestApi {
 			e.printStackTrace();
 		}
 		return regions;
+	}
+	
+	/******************************************************************
+	 * 
+	 * Miscellaneous 
+	 * 
+	 *
+	 * 
+	 *******************************************************************/
+		
+	public List<Recipe> findFavoriteRecipe(String username) {
+		String url = URLBASE + "findFavRecipe/" + username;
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+
+	public boolean addFavoriteRecipe(int recipeID, String username) {
+		boolean ret = false;
+		String url = URLBASE + "addFavRecipe/" + username;
+		String userDataJSON = objectToJson(recipeID);
+		String response = doPost(url, userDataJSON);
+		try {
+			ret = mapper.readValue(response, boolean.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+
+
+	public boolean addCooked(int recipeID) {
+		boolean ret = false;
+		String url = URLBASE + "addCooked/" + recipeID;
+		String userDataJSON = objectToJson(recipeID);
+		String response = doPost(url, userDataJSON);
+		try {
+			ret = mapper.readValue(response, boolean.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 }

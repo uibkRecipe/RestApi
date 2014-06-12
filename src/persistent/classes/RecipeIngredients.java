@@ -27,6 +27,14 @@ public class RecipeIngredients {
 			
 	}
 	
+	public void setQuantities(List<String> quantities) {
+		this.quantities = quantities;
+	}
+
+	public void setIngredients(List<IngredientType> ingredients) {
+		this.ingredients = ingredients;
+	}
+
 	public boolean removeIngredient(IngredientType ingredient){
 		if(ingredients.contains(ingredient)){
 			int index = ingredients.indexOf(ingredient);

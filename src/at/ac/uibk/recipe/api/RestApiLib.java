@@ -51,6 +51,7 @@ public class RestApiLib {
 			e.printStackTrace();
 		}
 		// Return the json
+		System.out.println(result);
 		return result;
 	}
 
@@ -81,24 +82,41 @@ public class RestApiLib {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(retSrc);
 		return retSrc;
 
 
 	
 	}
 	
-	public static HttpResponse doPut(String url, String c) throws ClientProtocolException, IOException
+	public static String doPut(String url, String c)
 	{
 	        HttpClient httpclient = new DefaultHttpClient();
 	        HttpPut request = new HttpPut(url);
 	        StringEntity s = new StringEntity(c, "UTF-8");
+	        String retSrc = null;
+	        
 	        s.setContentEncoding("UTF-8");
 	        s.setContentType("application/json");
 
 	        request.setEntity(s);
 	        request.addHeader("accept", "application/json");
 
-	        return httpclient.execute(request);
+	    	try {
+				HttpResponse response = httpclient.execute(request);
+				HttpEntity entity = response.getEntity();
+				System.out.println(response.getStatusLine());
+				if (entity != null) {
+					retSrc = EntityUtils.toString(entity, "UTF-8");
+				}
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return retSrc;
 	}
 	
 	public static String doDelete(String url){

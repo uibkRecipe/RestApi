@@ -1,19 +1,17 @@
 package JUnitTest;
 
-import java.util.List;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import persistent.classes.Ingredient;
-import persistent.classes.Recipe;
 import at.ac.uibk.recipe.api.RestApi;
 
 public class Tester {
 
-//	@Test
-//	public void test() {
-//		assertTrue(RestApi.getInstance().login("hannes", "hannes")!=null);
-//	}
+	@Test
+	public void test() {
+		assertTrue(RestApi.getInstance().login("hannes", "hannes")!=null);
+	}
 //	@Test
 //	public void test2() {
 //		assertTrue(RestApi.getInstance().login("thomas", "bk")==null);
@@ -99,25 +97,32 @@ public class Tester {
 ////		}
 //	}
 	
-	@Test
-	public void getAllRecipes(){
-		List<Recipe> recipes = RestApi.getInstance().getAllRecipes();
-		for (Recipe recipe : recipes) {
-			System.out.println(recipe);
-		}
-	}
-	
+//	@Test
+//	public void getAllRecipes(){
+//		List<Recipe> recipes = RestApi.getInstance().getAllRecipes();
+//		for (Recipe recipe : recipes) {
+//			System.out.println(recipe);
+//		}
+//	}
+//	
 	@Test
 	public void calculateCO2(){
-		System.out.println(RestApi.getInstance().findIngredientsByIngredientType(3));
 		System.out.println(RestApi.getInstance().calculateCO2(3, "simon").getDistance());
 	}
+//	
+//	@Test
+//	public void getIngredient(){
+//		System.out.println(RestApi.getInstance().getIngredients(3).getQuantities());
+//	}
 	
-	@Test
-	public void addIngredient(){
-		Ingredient ingredient = new Ingredient(3, 2000, "brot");
-		System.out.println(RestApi.getInstance().addIngredient(ingredient));
-		
-	}
-
+//	@Test
+//	public void addIngredient(){
+//		Ingredient ingredient = new Ingredient(3, 2000, "brot");
+//		System.out.println(RestApi.getInstance().addIngredient(ingredient));
+//		
+//	}
+//	@Test
+//	public void changePassword(){
+//		System.out.println(RestApi.getInstance().changePassword("hannes", "blub", "hannes", "hannes"));
+//	}
 }
