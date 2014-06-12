@@ -70,6 +70,7 @@ public class RestApiLib {
 		try {
 			HttpResponse response = httpclient.execute(request);
 			HttpEntity entity = response.getEntity();
+			System.out.println(response.getStatusLine());
 			if (entity != null) {
 				retSrc = EntityUtils.toString(entity, "UTF-8");
 			}

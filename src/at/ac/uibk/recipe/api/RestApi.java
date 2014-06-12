@@ -10,7 +10,6 @@ import java.util.List;
 
 
 
-
 import org.apache.http.client.ClientProtocolException;
 
 import persistent.classes.City;
@@ -30,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RestApi {
 
-	private static final String URLBASE = "http://138.232.65.234:8080/RestServer2/rest/manager/";
+	private static final String URLBASE = "http://138.232.65.234:8080/RestServer/rest/manager/";
 
 	private static RestApi instance;
 
@@ -68,8 +67,10 @@ public class RestApi {
 	public boolean addUser(String username, String password, String email,
 			String firstname, String lastname, City city) {
 		boolean ret = false;
-		
-		User newUser = new User(username, password, email, firstname, lastname, city); //new User(username, password, email, firstname, lastname);
+
+		User newUser = new User(username, password, email, firstname, lastname,
+				city); // new User(username, password, email, firstname,
+						// lastname);
 		// byte[] foto = null;
 		// File fi = new File("test.jpg");
 		// try {
@@ -97,12 +98,14 @@ public class RestApi {
 
 		return ret;
 	}
-	
+
 	public boolean addUser(String username, String password, String email,
-			String firstname, String lastname, byte[] foto,  City city) {
+			String firstname, String lastname, byte[] foto, City city) {
 		boolean ret = false;
-		
-		User newUser = new User(username, password, email, firstname, lastname, city); //new User(username, password, email, firstname, lastname);
+
+		User newUser = new User(username, password, email, firstname, lastname,
+				city); // new User(username, password, email, firstname,
+						// lastname);
 		// byte[] foto = null;
 		// File fi = new File("test.jpg");
 		// try {
@@ -130,7 +133,6 @@ public class RestApi {
 
 		return ret;
 	}
-
 
 	public User findUserById(String userName) {
 		String url = URLBASE + "findUser/" + userName;
@@ -252,7 +254,7 @@ public class RestApi {
 		}
 		return cities;
 	}
-	
+
 	public List<City> findCityByCountry(String country) {
 		String url = URLBASE + "cityByCountry/" + country;
 		String json = doGet(url);
@@ -262,9 +264,9 @@ public class RestApi {
 			});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			// e.printStackTrace();
 		}
-		return cities;	
+		return cities;
 	}
 
 	/******************************************************************
@@ -327,10 +329,9 @@ public class RestApi {
 		return ret;
 
 	}
-	
 
 	public boolean existFriend(String username1, String username2) {
-		String url = URLBASE + "existFriend/" + username1 +"/" +username2;
+		String url = URLBASE + "existFriend/" + username1 + "/" + username2;
 		String json = doGet(url);
 		boolean ret = false;
 		try {
@@ -348,26 +349,24 @@ public class RestApi {
 	 * 
 	 ****************************************************************/
 
-	 public boolean addRecipe(Recipe r) {
-			boolean ret = false;
-			String url = URLBASE + "addRecipe";
-			String userDataJSON = objectToJson(r);
-			String response = doPost(url, userDataJSON);
-			try {
-				ret = mapper.readValue(response, boolean.class);
+	public boolean addRecipe(Recipe r) {
+		boolean ret = false;
+		String url = URLBASE + "addRecipe";
+		String userDataJSON = objectToJson(r);
+		String response = doPost(url, userDataJSON);
+		try {
+			ret = mapper.readValue(response, boolean.class);
 
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-			return ret;
-	 }
-	 
-
+		return ret;
+	}
 
 	public List<Recipe> findRecipeByAutor(String author) {
 		String url = URLBASE + "findRecipeByAuthor/" + author;
@@ -400,14 +399,28 @@ public class RestApi {
 
 		return ret;
 	}
-	
+
 	public List<Recipe> getAllRecipes() {
 		String url = URLBASE + "getAllRecipes";
 		String json = doGet(url);
+		System.out.println(json);
 		List<Recipe> ret = null;
 		try {
 			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
 			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	public Recipe calculateCO2(int recipeID, String username) {
+		String url = URLBASE + "Co2Value/" + recipeID + "/" + username;
+		String json = doGet(url);
+		Recipe ret = null;
+		try {
+			ret = mapper.readValue(json, Recipe.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -439,8 +452,9 @@ public class RestApi {
 		String json = doGet(url);
 		List<IngredientType> ingredients = null;
 		try {
-			ingredients = mapper.readValue(json, new TypeReference<List<IngredientType>>() {
-			});
+			ingredients = mapper.readValue(json,
+					new TypeReference<List<IngredientType>>() {
+					});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -466,7 +480,6 @@ public class RestApi {
 
 		return ret;
 	}
-	
 
 	/***********************************************************
 	 * 
@@ -478,8 +491,9 @@ public class RestApi {
 		String json = doGet(url);
 		List<IngredientType> ingredients = null;
 		try {
-			ingredients = mapper.readValue(json, new TypeReference<List<IngredientType>>() {
-			});
+			ingredients = mapper.readValue(json,
+					new TypeReference<List<IngredientType>>() {
+					});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -487,18 +501,19 @@ public class RestApi {
 		return ingredients;
 	}
 
-//	public boolean findRezeptByIngredient() {
-//		String test = doGet("http://138.232.65.234:8080/RestServer/rest/recipe/ingredients");
-//		ObjectMapper mapper = new ObjectMapper();
-//		boolean o = false;
-//		try {
-//			o = mapper.readValue(test, boolean.class);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return o;
-//	}
+	// public boolean findRezeptByIngredient() {
+	// String test =
+	// doGet("http://138.232.65.234:8080/RestServer/rest/recipe/ingredients");
+	// ObjectMapper mapper = new ObjectMapper();
+	// boolean o = false;
+	// try {
+	// o = mapper.readValue(test, boolean.class);
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// return o;
+	// }
 
 	public boolean addIngredientToRecipe(int recipeID,
 			RecipeIngredients recIngredients) {
@@ -522,8 +537,6 @@ public class RestApi {
 		}
 		return ret;
 	}
-
-
 
 	/****************************************************************
 	 * 
@@ -551,6 +564,19 @@ public class RestApi {
 		return ret;
 	}
 	
+	public List<Ingredient> findIngredientsByIngredientType(int ingredientTypeID) {
+		String url = URLBASE + "finIngredientByType/" + ingredientTypeID;
+		String json = doGet(url);
+		List<Ingredient> ingredients = null;
+		try {
+			ingredients = mapper.readValue(json, new TypeReference<List<Ingredient>>() {
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ingredients;
+	}
 
 	/*****************************************************************
 	 * 
@@ -558,7 +584,7 @@ public class RestApi {
 	 * 
 	 *****************************************************************/
 
-	public boolean addRating(Rating rating){
+	public boolean addRating(Rating rating) {
 		boolean ret = false;
 		String url = URLBASE + "addRating";
 		String userDataJSON = objectToJson(rating);
@@ -598,6 +624,4 @@ public class RestApi {
 		return regions;
 	}
 
-
-	
 }
