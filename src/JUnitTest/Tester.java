@@ -116,6 +116,14 @@ public class Tester {
 	}
 	
 	@Test
+	public void getCO2FriendlyRec(){
+		List<Recipe> test = RestApi.getInstance().getCO2FriendlyRec("hannes");
+		for (Recipe recipe : test) {
+			System.out.println("name: " + recipe.getName() +  "  RezeptID: "+ recipe.getID() + "  Distanz: "  + recipe.getDistance());
+		}
+	}
+	
+	@Test
 	public void getIngredient(){
 		System.out.println(RestApi.getInstance().getIngredients(3).getQuantities());
 	}

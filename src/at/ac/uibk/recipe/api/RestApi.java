@@ -9,12 +9,6 @@ import static at.ac.uibk.recipe.api.RestApiLib.objectToJson;
 import java.io.IOException;
 import java.util.List;
 
-
-
-
-
-
-
 import org.apache.http.client.ClientProtocolException;
 
 import persistent.classes.City;
@@ -500,6 +494,20 @@ public class RestApi {
 		Recipe ret = null;
 		try {
 			ret = mapper.readValue(json, Recipe.class);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public List<Recipe> getCO2FriendlyRec(String username){
+		String url = URLBASE + "getCO2FriendlyRec/" + username;
+		String json = doGet(url);
+		List<Recipe> ret = null;
+		try {
+			ret = mapper.readValue(json, new TypeReference<List<Recipe>>() {
+			});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
