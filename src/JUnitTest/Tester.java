@@ -148,4 +148,9 @@ public class Tester {
 	public void getFriend(){
 		System.out.println(RestApi.getInstance().getFriends("hannes"));
 	}
+	
+	@Test
+	public void existsFriend(){
+		System.out.println(RestApi.getInstance().existFriend("hannes", "blub"));
+	}
 }

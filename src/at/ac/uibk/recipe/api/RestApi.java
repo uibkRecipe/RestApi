@@ -388,7 +388,7 @@ public class RestApi {
 	}
 
 	public List<Recipe> findRecipeByAutor(String author) {
-		String url = URLBASE + "findRecipeByAuthor/" + author;
+		String url = URLBASE + "finRecipeByAuthor/" + author;
 		String json = doGet(url);
 		List<Recipe> ret = null;
 		try {
