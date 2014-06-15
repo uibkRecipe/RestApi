@@ -138,4 +138,14 @@ public class Tester {
 	public void changePassword(){
 		System.out.println(RestApi.getInstance().changePassword("hannes", "blub", "hannes", "hannes"));
 	}
+	
+	@Test
+	public void addFriend(){
+		System.out.println(RestApi.getInstance().addFriend("hannes", "mirko"));
+	}
+	
+	@Test
+	public void getFriend(){
+		System.out.println(RestApi.getInstance().getFriends("hannes"));
+	}
 }

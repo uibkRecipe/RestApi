@@ -313,7 +313,7 @@ public class RestApi {
 		String url = URLBASE + "addFriend/" + username2;
 		String userDataJSON = objectToJson(username1);
 
-		String response = doPost(url, userDataJSON);
+		String response = doPost(url, username1);
 		try {
 			ret = mapper.readValue(response, boolean.class);
 		} catch (JsonParseException e) {
